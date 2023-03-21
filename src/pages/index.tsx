@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function Home() {
   const [formVisible, setFormVisibility] = useState(false);
+  const [client, setClient] = useState<Client>(new Client('', 0, ''));
 
   const clients = [
     new Client('Daniel', 20, '1'),
@@ -16,18 +17,24 @@ export default function Home() {
 
   const openEditClient = (client: Client) => {
     console.log(client);
+    setFormVisibility(true);
+    setClient(client);
   };
 
   const openDeleteClient = (client: Client) => {
     console.log(client);
+    // setFormVisibility(true);
+    // setClient(client);
   };
 
   const saveClient = (client: Client) => {
     console.log(client);
+    setFormVisibility(false);
   };
 
   const openNewClient = () => {
     setFormVisibility(true);
+    setClient(new Client('', 0, ''));
   };
 
   const goBack = () => {
@@ -62,7 +69,7 @@ export default function Home() {
             </>
           )}
           {formVisible && (
-            <Form client={clients[0]} goBack={goBack} saveClient={saveClient} />
+            <Form client={client} goBack={goBack} saveClient={saveClient} />
           )}
         </Layout>
       </div>
