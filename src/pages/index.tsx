@@ -1,6 +1,22 @@
 import Layout from '@/components/Layout';
+import Table from '@/components/Table';
+import Client from '@/core/Client';
 
 export default function Home() {
+  const clients = [
+    new Client('Daniel', 20, '1'),
+    new Client('Letícia', 25, '2'),
+    new Client('John Doe', 12, '3'),
+  ];
+
+  const openEditClient = (client: Client) => {
+    console.log(client);
+  };
+
+  const openDeleteClient = (client: Client) => {
+    console.log(client);
+  };
+
   return (
     <>
       <div
@@ -14,7 +30,11 @@ export default function Home() {
       `}
       >
         <Layout title='CRUD'>
-          <span>Conteúdo</span>
+          <Table
+            clients={clients}
+            openEditClient={openEditClient}
+            openDeleteClient={openDeleteClient}
+          ></Table>
         </Layout>
       </div>
     </>
