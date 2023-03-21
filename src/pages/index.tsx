@@ -3,38 +3,47 @@ import Form from '@/components/Form';
 import Layout from '@/components/Layout';
 import Table from '@/components/Table';
 import Client from '@/core/Client';
-import { useState } from 'react';
+import ClientRepository from '@/core/ClientRepository';
+import ClientCollection from '@/firebase/db/ClientCollection';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [formVisible, setFormVisibility] = useState(false);
+  const repo: ClientRepository = new ClientCollection();
+
+  const [clients, setClients] = useState<Client[]>([]);
   const [client, setClient] = useState<Client>(new Client('', 0, ''));
+  const [formVisible, setFormVisibility] = useState(false);
 
-  const clients = [
-    new Client('Daniel', 20, '1'),
-    new Client('Letícia', 25, '2'),
-    new Client('John Doe', 12, '3'),
-  ];
+  useEffect(() => {
+    getAllClients();
+  }, []);
 
-  const openEditClient = (client: Client) => {
-    console.log(client);
-    setFormVisibility(true);
-    setClient(client);
-  };
-
-  const openDeleteClient = (client: Client) => {
-    console.log(client);
-    // setFormVisibility(true);
-    // setClient(client);
-  };
-
-  const saveClient = (client: Client) => {
-    console.log(client);
-    setFormVisibility(false);
+  const getAllClients = () => {
+    console.log('getAllClients');
+    repo.getAll().then((clients) => {
+      setClients(clients);
+      setFormVisibility(false);
+    });
   };
 
   const openNewClient = () => {
     setFormVisibility(true);
     setClient(new Client('', 0, ''));
+  };
+
+  const saveClient = async (client: Client) => {
+    await repo.save(client);
+    getAllClients();
+  };
+
+  const openEditClient = (client: Client) => {
+    setFormVisibility(true);
+    setClient(client);
+  };
+
+  const deleteClient = async (client: Client) => {
+    await repo.delete(client);
+    getAllClients();
   };
 
   const goBack = () => {
@@ -64,7 +73,7 @@ export default function Home() {
               <Table
                 clients={clients}
                 openEditClient={openEditClient}
-                openDeleteClient={openDeleteClient}
+                deleteClient={deleteClient}
               />
             </>
           )}

@@ -4,7 +4,7 @@ import { DeleteIcon, EditIcon } from './Icons';
 type TablePropsType = {
   clients: Client[];
   openEditClient: (client: Client) => void;
-  openDeleteClient: (client: Client) => void;
+  deleteClient: (client: Client) => void;
 };
 
 export default function Table(props: TablePropsType) {
@@ -29,7 +29,7 @@ export default function Table(props: TablePropsType) {
             </button>
             <button
               className='text-red-500 hover:scale-125 mx-1 duration-300'
-              onClick={() => props.openDeleteClient?.(client)}
+              onClick={() => props.deleteClient?.(client)}
             >
               {DeleteIcon}
             </button>
