@@ -1,3 +1,4 @@
+import { GreenButton } from '@/components/Buttons';
 import Layout from '@/components/Layout';
 import Table from '@/components/Table';
 import Client from '@/core/Client';
@@ -30,11 +31,14 @@ export default function Home() {
       `}
       >
         <Layout title='CRUD'>
+          <div className='flex justify-end'>
+            <GreenButton className='mb-4'>New Client</GreenButton>
+          </div>
           <Table
             clients={clients}
             openEditClient={openEditClient}
             openDeleteClient={openDeleteClient}
-          ></Table>
+          />
         </Layout>
       </div>
     </>
