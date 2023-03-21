@@ -3,8 +3,11 @@ import Form from '@/components/Form';
 import Layout from '@/components/Layout';
 import Table from '@/components/Table';
 import Client from '@/core/Client';
+import { useState } from 'react';
 
 export default function Home() {
+  const [formVisible, setFormVisibility] = useState(false);
+
   const clients = [
     new Client('Daniel', 20, '1'),
     new Client('Letícia', 25, '2'),
@@ -17,6 +20,18 @@ export default function Home() {
 
   const openDeleteClient = (client: Client) => {
     console.log(client);
+  };
+
+  const saveClient = (client: Client) => {
+    console.log(client);
+  };
+
+  const openNewClient = () => {
+    setFormVisibility(true);
+  };
+
+  const goBack = () => {
+    setFormVisibility(false);
   };
 
   return (
@@ -32,15 +47,23 @@ export default function Home() {
       `}
       >
         <Layout title='CRUD'>
-          <div className='flex justify-end'>
-            <GreenButton className='mb-4'>New Client</GreenButton>
-          </div>
-          {/* <Table
-            clients={clients}
-            openEditClient={openEditClient}
-            openDeleteClient={openDeleteClient}
-          /> */}
-          <Form client={clients[0]} />
+          {!formVisible && (
+            <>
+              <div className='flex justify-end'>
+                <GreenButton className='mb-4' onClick={openNewClient}>
+                  New Client
+                </GreenButton>
+              </div>
+              <Table
+                clients={clients}
+                openEditClient={openEditClient}
+                openDeleteClient={openDeleteClient}
+              />
+            </>
+          )}
+          {formVisible && (
+            <Form client={clients[0]} goBack={goBack} saveClient={saveClient} />
+          )}
         </Layout>
       </div>
     </>
