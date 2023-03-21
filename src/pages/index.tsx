@@ -1,4 +1,5 @@
 import { GreenButton } from '@/components/Buttons';
+import Form from '@/components/Form';
 import Layout from '@/components/Layout';
 import Table from '@/components/Table';
 import Client from '@/core/Client';
@@ -34,11 +35,12 @@ export default function Home() {
           <div className='flex justify-end'>
             <GreenButton className='mb-4'>New Client</GreenButton>
           </div>
-          <Table
+          {/* <Table
             clients={clients}
             openEditClient={openEditClient}
             openDeleteClient={openDeleteClient}
-          />
+          /> */}
+          <Form client={clients[0]} />
         </Layout>
       </div>
     </>
